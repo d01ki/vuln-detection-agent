@@ -3,27 +3,8 @@ CrewAI agents for vulnerability detection and analysis.
 """
 
 from crewai import Agent
-from crewai_tools import tool
+import inspect
 from tools import nmap_scan_tool, cve_lookup_tool, report_generator_tool
-
-
-# Wrap the functions as CrewAI tools
-@tool
-def nmap_scanner(target_ip: str) -> str:
-    """Scan target IP for vulnerabilities using nmap"""
-    return nmap_scan_tool(target_ip)
-
-
-@tool  
-def cve_analyzer(cve_id: str) -> str:
-    """Look up CVE vulnerability information"""
-    return cve_lookup_tool(cve_id)
-
-
-@tool
-def report_generator(scan_data: str, target_ip: str) -> str:
-    """Generate vulnerability assessment report"""
-    return report_generator_tool(scan_data, target_ip)
 
 
 def create_recon_agent():
@@ -35,7 +16,7 @@ def create_recon_agent():
         and vulnerability identification. You use nmap and various scanning techniques to discover 
         vulnerabilities in target systems. You are methodical, thorough, and always prioritize 
         accuracy in your assessments.""",
-        tools=[nmap_scanner],
+        tools=[nmap_scan_tool],
         verbose=True,
         allow_delegation=False,
         max_iter=3
@@ -51,7 +32,7 @@ def create_cve_analyst_agent():
         threat intelligence. You have deep knowledge of CVE databases, vulnerability scoring systems, 
         and the latest security threats. You provide detailed analysis of vulnerabilities including 
         their impact, exploitability, and remediation strategies.""",
-        tools=[cve_analyzer],
+        tools=[cve_lookup_tool],
         verbose=True,
         allow_delegation=False,
         max_iter=5
@@ -67,7 +48,7 @@ def create_report_agent():
         professional vulnerability assessment reports. You translate technical findings into 
         clear, actionable recommendations for both technical and management audiences. Your reports 
         are known for their clarity, accuracy, and practical value.""",
-        tools=[report_generator],
+        tools=[report_generator_tool],
         verbose=True,
         allow_delegation=False,
         max_iter=3
