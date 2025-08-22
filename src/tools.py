@@ -9,10 +9,8 @@ import subprocess
 import time
 from pathlib import Path
 from typing import Dict, List, Any, Optional
-from crewai_tools import tool
 
 
-@tool("Nmap Vulnerability Scanner")
 def nmap_scan_tool(target_ip: str, scan_type: str = "vuln") -> str:
     """
     Performs nmap vulnerability scans using --script vuln to detect CVE vulnerabilities.
@@ -118,7 +116,6 @@ def extract_cves(script_output: str) -> List[str]:
     return list(set(re.findall(cve_pattern, script_output, re.IGNORECASE)))
 
 
-@tool("CVE Information Lookup")
 def cve_lookup_tool(cve_id: str) -> str:
     """
     Looks up CVE vulnerability information from databases.
@@ -218,7 +215,6 @@ def get_severity(cvss_score: float) -> str:
         return "LOW"
 
 
-@tool("Vulnerability Report Generator")
 def report_generator_tool(scan_data: str, target_ip: str) -> str:
     """
     Generates comprehensive vulnerability assessment reports in markdown format.
