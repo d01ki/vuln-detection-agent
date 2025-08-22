@@ -3,8 +3,7 @@ CrewAI agents for vulnerability detection and analysis.
 """
 
 from crewai import Agent
-import inspect
-from tools import nmap_scan_tool, cve_lookup_tool, report_generator_tool
+from tools import NmapScanTool, CVELookupTool, ReportGeneratorTool
 
 
 def create_recon_agent():
@@ -16,7 +15,7 @@ def create_recon_agent():
         and vulnerability identification. You use nmap and various scanning techniques to discover 
         vulnerabilities in target systems. You are methodical, thorough, and always prioritize 
         accuracy in your assessments.""",
-        tools=[nmap_scan_tool],
+        tools=[NmapScanTool()],
         verbose=True,
         allow_delegation=False,
         max_iter=3
@@ -32,7 +31,7 @@ def create_cve_analyst_agent():
         threat intelligence. You have deep knowledge of CVE databases, vulnerability scoring systems, 
         and the latest security threats. You provide detailed analysis of vulnerabilities including 
         their impact, exploitability, and remediation strategies.""",
-        tools=[cve_lookup_tool],
+        tools=[CVELookupTool()],
         verbose=True,
         allow_delegation=False,
         max_iter=5
@@ -48,7 +47,7 @@ def create_report_agent():
         professional vulnerability assessment reports. You translate technical findings into 
         clear, actionable recommendations for both technical and management audiences. Your reports 
         are known for their clarity, accuracy, and practical value.""",
-        tools=[report_generator_tool],
+        tools=[ReportGeneratorTool()],
         verbose=True,
         allow_delegation=False,
         max_iter=3
